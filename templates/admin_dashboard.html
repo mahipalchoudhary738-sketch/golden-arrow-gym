@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - GOLDEN ARROW</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="header">
+    <h1>Admin Dashboard</h1>
+    <a href="/" class="btn-primary">Back to Home</a>
+</header>
+
+<section class="dashboard-container">
+    <div class="card">
+        <h2>Total Members</h2>
+        <p>{{ total_members }}</p>
+    </div>
+    <div class="card">
+        <h2>New Members This Month</h2>
+        <p>{{ new_members }}</p>
+    </div>
+    <div class="card">
+        <h2>Plan Distribution</h2>
+        <ul>
+        {% for plan in plans %}
+            <li>{{ plan[0] }} : {{ plan[1] }} members</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="card">
+        <h2>Pending Fees</h2>
+        <ul>
+        {% for fee in pending_fees %}
+            <li>{{ fee[1] }} - ₹{{ fee[2] }} due {{ fee[3] }}
+                <a href="/mark_paid/{{ fee[0] }}" class="btn-small">Mark Paid</a>
+            </li>
+        {% else %}
+            <li>All fees paid ✅</li>
+        {% endfor %}
+        </ul>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members - GOLDEN ARROW</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="header">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="50">
+        <div>
+            <h1>GOLDEN ARROW</h1>
+            <span>Vision Health</span>
+        </div>
+    </div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/members">Members</a>
+        <a href="/add_member">Add Member</a>
+        <a href="/dashboard">Dashboard</a>
+    </nav>
+</header>
+
+<section class="content">
+    <h2>Members List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Plan</th>
+                <th>Join Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for member in members %}
+            <tr>
+                <td>{{ member[0] }}</td>
+                <td>{{ member[1] }}</td>
+                <td>{{ member[2] }}</td>
+                <td>{{ member[3] }}</td>
+                <td>{{ member[4] }}</td>
+                <td><a href="/delete_member/{{ member[0] }}" class="btn-small delete" onclick="return confirm('Are you sure you want to delete this member?')">Delete</a></td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6">No members yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

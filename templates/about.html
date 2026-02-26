@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - GOLDEN ARROW</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="header">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="50">
+        <div>
+            <h1>GOLDEN ARROW</h1>
+            <span>Vision Health</span>
+        </div>
+    </div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about">About Us</a>
+        <a href="/contact">Contact</a>
+        <a href="/dashboard">Dashboard</a>
+    </nav>
+</header>
+
+<section class="content">
+    <h2>About GOLDEN ARROW</h2>
+    <p>GOLDEN ARROW is committed to helping you achieve your fitness goals. Our expert trainers, modern equipment, and personalized programs ensure that every member gets the attention and motivation they need. Vision Health is our promise – to make fitness accessible, safe, and enjoyable for everyone.</p>
+</section>
+
+<footer class="footer">
+    <p>📍 Address: Your Gym Location | 📞 Phone: 1234567890 | ✉️ Email: info@goldenarrow.com</p>
+    <p>© 2026 GOLDEN ARROW - Vision Health</p>
+</footer>
+</body>
+</html>
