@@ -5,6 +5,18 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "golden_arrow_secret_key"
+
+from functools import wraps
+from flask import session, redirect, url_for
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'admin' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 # ==========================
 # DATABASE SETUP
 # ==========================
