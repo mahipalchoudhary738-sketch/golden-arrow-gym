@@ -1,13 +1,13 @@
 {
   "name": "GOLDEN ARROW",
-  "short_name": "GOLDEN ARROW",
+  "short_name": "Gym",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#ff4d4d",
+  "theme_color": "#c9a227",
   "icons": [
     {
-      "src": "/static/images/placeholder.jpg",
+      "src": "/static/images/logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
