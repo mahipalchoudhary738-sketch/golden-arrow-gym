@@ -23,10 +23,16 @@
         <a href="/">Home</a>
         <a href="/about">About Us</a>
         <a href="/contact">Contact</a>
+
+    {% if session.get('admin') %}
         <a href="/dashboard">Dashboard</a>
         <a href="/members">Members</a>
         <a href="/add_member">Add Member</a>
         <a href="/add_fee">Assign Fee</a>
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Admin Login</a>
+    {% endif %}
     </nav>
     <a href="https://wa.me/<your-number>" class="whatsapp-btn">WhatsApp Us</a>
 </header>

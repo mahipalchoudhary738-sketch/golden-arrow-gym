@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
+from functools import wraps
 import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
-
+app.secret_key = "golden_arrow_secret_key"
 # ==========================
 # DATABASE SETUP
 # ==========================
@@ -35,6 +36,27 @@ conn.commit()
 conn.close()
 
 # ==========================
+# LOGIN SYSTEM
+# ==========================
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if username == "admin" and password == "1234":
+            session['admin'] = True
+            return redirect('/dashboard')
+
+    return render_template("login.html")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('admin', None)
+    return redirect('/')
+
+# ==========================
 # PUBLIC PAGES
 # ==========================
 @app.route('/')
@@ -53,6 +75,7 @@ def contact():
 # MEMBERS
 # ==========================
 @app.route('/members')
+@login_required
 def members():
     conn = sqlite3.connect('gym.db')
     cursor = conn.cursor()
@@ -62,6 +85,7 @@ def members():
     return render_template("members.html", members=data)
 
 @app.route('/add_member', methods=['GET','POST'])
+@login_required
 def add_member():
     if request.method=='POST':
         name = request.form['name']
@@ -80,6 +104,7 @@ def add_member():
 
 
 @app.route('/delete_member/<int:member_id>')
+@login_required
 def delete_member(member_id):
     conn = sqlite3.connect('gym.db')
     cursor = conn.cursor()
@@ -96,6 +121,7 @@ def delete_member(member_id):
 # FEES
 # ==========================
 @app.route('/add_fee', methods=['GET','POST'])
+@login_required
 def add_fee():
     conn = sqlite3.connect('gym.db')
     cursor = conn.cursor()
@@ -121,6 +147,7 @@ def add_fee():
 # ADMIN DASHBOARD
 # ==========================
 @app.route('/dashboard')
+@login_required
 def dashboard():
     conn = sqlite3.connect('gym.db')
     cursor = conn.cursor()
@@ -167,10 +194,19 @@ def dashboard():
                            pending_fees=pending_fees,
                            datetime=datetime)  # <- added
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'admin' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 # ==========================
 # MARK FEE AS PAID
 # ==========================
 @app.route('/mark_paid/<int:fee_id>')
+@login_required
 def mark_paid(fee_id):
     conn = sqlite3.connect('gym.db')
     cursor = conn.cursor()
